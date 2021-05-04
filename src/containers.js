@@ -107,7 +107,7 @@ let refreshContainers = function() {
     let existingContainerIds = [];
     docker.listContainers().then((containers) => {
         containers.forEach((containerData) => {
-            if (config.DOCKER_IMAGE_PATTERN === null || containerData.Image.substr(0, config.DOCKER_IMAGE_PATTERN.length) === config.DOCKER_IMAGE_PATTERN) {
+            if (config.DOCKER_IMAGE_PATTERN === null || containerData.Image.match(config.DOCKER_IMAGE_PATTERN) !== null) {
                 existingContainerIds.push(containerData.Id);
                 if (!attachedContainers[containerData.Id]) {
                     attachToContainer(containerData);
